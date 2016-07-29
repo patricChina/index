@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta lang="en">
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link href="index.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div class="header-wrapper">
+    <div class="header">
+    <div class="logo">
+        <div class="logo-img"></div>
+        <span class=" logo-title">Paphone</span>
+    </div>
+    <ul class="ul-nav" id="nav" >
+        <li><a href="javascript:" data-id="index.html">首页</a></li>
+        <li><a href="javascript:" data-id="rule.html">接入规范</a></li>
+        <li><a href="javascript:">常见问题</a></li>
+        <li><a href="javascript:">信息&下载</a></li>
+        <li><a href="javascript:">应用案例</a></li>
+        <li><a href="javascript:">联系我们</a></li>
+    </ul>
+    </div>
+</div>
+<div class="main-wrapper">
+    <div class="main">
+        <div class="photo-1"></div>
+        <div class="photo-2"></div>
+        <div class="photo-3-1"></div>
+        <div class="photo-3-2"><img src="images/index3_icon.png" /></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $('#nav').on('click','a',function(){
+        if(location.href.indexOf($(this).attr('data-id'))>0){
+            $(this).addClass('decoration');
+            $(this).siblings().removeClass('decoration');
+        }
+    })
+</script>
+</html>
