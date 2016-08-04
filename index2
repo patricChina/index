@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta lang="en">
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="header-wrapper">
+    <div class="header">
+        <div class="logo">
+            <div class="logo-img"></div>
+            <span class="logo-title">Paphone</span>
+        </div>
+        <ul class="ul-nav" id="nav" >
+            <li><a href="javascript:" data-id="index.html">首页</a></li>
+            <li><a href="javascript:" data-id="rule.html">接入规范</a></li>
+            <li><a href="javascript:" data-id="question.html">常见问题</a></li>
+            <li><a href="javascript:" data-id="information.html">信息&下载</a></li>
+            <li><a href="javascript:" data-id="apply.html">应用案例</a></li>
+            <li><a href="javascript:" data-id="contactUs.html">联系我们</a></li>
+        </ul>
+    </div>
+</div>
+<div class="main-wrapper ">
+    <div class="main width">
+        <div class="photo-1"></div>
+        <div class="photo-2"></div>
+        <div class="photo-3-1"></div>
+        <div class="photo-3-2"><img src="images/index3_icon.png" /></div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/nav.js"></script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+@charset "UTF-8";
+.photo-1{
+    width: 100%;
+    height: 485px;
+    background: url("../images/index1_back.png") center no-repeat;
+    background-size: 1280px;
+    margin-top: 15px;
+}
+.photo-2{
+    width: 100%;
+    height: 485px;
+    background: url("../images/index2_back.png") center no-repeat;
+    background-size: 1280px;
+}
+.photo-3-1{
+    width: 100%;
+    height: 87px;
+    background: url("../images/index3_banner.png") center no-repeat;
+    background-size: 1280px;
+}
+.photo-3-2{
+    width: 100%;
+    height: 490px;
+    background: #FFFFFF;
+    text-align: center;
+    background-size: 1280px;
+}
+.width{
+    width: 1280px;
+    background: #EFEFEF;
+}
