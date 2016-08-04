@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta lang="en">
+    <meta charset="UTF-8">
+    <title>联系我们</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css"/>
+    <link href="css/contactUs.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="header-wrapper">
+    <div class="header">
+        <div class="logo">
+            <div class="logo-img"></div>
+            <span class="logo-title">Paphone</span>
+        </div>
+        <ul class="ul-nav" id="nav" >
+            <li><a href="javascript:" data-id="index.html">首页</a></li>
+            <li><a href="javascript:" data-id="rule.html">接入规范</a></li>
+            <li><a href="javascript:" data-id="question.html">常见问题</a></li>
+            <li><a href="javascript:" data-id="information.html">信息&下载</a></li>
+            <li><a href="javascript:" data-id="apply.html">应用案例</a></li>
+            <li><a href="javascript:" data-id="contactUs.html">联系我们</a></li>
+        </ul>
+    </div>
+</div>
+<div class="main-wrapper contactBack">
+    <div class="main banner"><div class="back">
+        <div class="bannerImg"></div></div>
+        <div class="contactMain"></div>
+        <div class="space"></div>
+    </div>
+
+</div>
+
+</body>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/nav.js"></script>
+</html>
