@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.contactBack{
+    background:white;
+}
+.banner{
+    background: #DBDBDB ;
+    width: 100%;
+    height: auto;
+}
+.bannerImg{
+    min-width: 1920px;
+    height: 277px;
+    background: url("../images/downloadBanner.png") center no-repeat;
+    background-size: 1920px;
+}
+.img-wrap{
+    width: 1000px;
+    height: 900px;
+    background: url("../images/downloadMain.png") center no-repeat;
+    background-size: 1000px;
+    position: absolute;
+    top: 240px;
+    left: 50%;
+    margin-left: -500px;
+}
