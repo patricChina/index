@@ -1,0 +1,27 @@
+@charset "UTF-8";
+.contactBack{
+    background:white;
+
+}
+.banner{
+    background: url("../images/contactBack.png") ;
+    width: 100%;
+    height: auto;
+
+}
+.bannerImg{
+    min-width: 1790px;
+    height: 264px;
+
+    background: url("../images/contactBanner.png") center no-repeat;
+
+}
+.contactMain{
+    width: 1000px;
+    height: 507px;
+    margin: 0 auto;
+    background: url("../images/contactMain.png") center no-repeat;
+}
+.back{
+    background: #D8C5C4;
+}
