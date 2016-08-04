@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.banner{
+    background: white;
+    margin: 0 auto;
+    width: 100%;
+}
+.bannerImg{
+    background: #977651;
+    height: 264px;
+    background: url("../images/applyBanner.png") center no-repeat;
+    margin: 0 auto;
+
+}
+.applyMain {
+    width: 750px;
+    height: 863px;
+    margin: 0 auto;
+}
+.applyMain img{
+    width: 750px;
+}
+.back{
+    height: 264px;
+    background: #4E382E;
+}
