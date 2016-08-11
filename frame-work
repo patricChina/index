@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/frame-workList.css">
+</head>
+<body>
+<div class="title">职场管理&nbsp;>&nbsp;职场列表</div>
+<div class="title select">
+    <select class="selectStyle" id="workName">
+        <option>职场名称</option>
+        <option>UM账号</option>
+    </select>&nbsp;
+    <input id="name" type="text" class="selectInput"/>
+    <span class="business">业务线</span>&nbsp;
+    <select id="workLine" class="selectStyle">
+        <option>全部</option>
+        <option>银行</option>
+    </select>
+    <span  class="location business">位置数据</span>&nbsp;
+    <select id="selectPosition" class="selectStyle">
+        <option>全部</option>
+        <option>已回传</option>
+        <option>未回传</option>
+    </select>
+</div>
+<div class="search">
+    <span>发布时间：</span>
+    <input id="dateFrom" type="date" class="selectInput">
+    <span class="searchMid">至</span><input id="dateTo" class="selectInput" type="date">
+    <input id="search" type="button" class="button" value="搜索">
+</div>
+<div class="total">
+    <div class="totalText">共有<span class="totalRed">**</span>条数据</div>
+    <div class="totalButton totalMargin"><input type="button" class="button buttonRadius" value="批量添加"><input type="button" class="button buttonRadius" value="新增职场"></div>
+</div>
+<div>
+    <table class="table" cellpadding="0" cellspacing="0"  >
+        <tbody id="tbody">
+        <tr style="height: 35px" id="tr">
+            <td width="45px">业务线</td>
+            <td width="96px">职场名称</td>
+            <td width="153px">职场地址</td>
+            <td width="50px">发布人</td>
+            <td width="70px">UM账号</td>
+            <td width="72px">发布时间</td>
+            <td width="67px">上下班时间</td>
+            <td >位置数据</td>
+            <td >操作</td>
+        </tr>
+        </tbody>
+        <div class="page">
+            <span class="pageSpan">共<b class="pageTotal">2</b>页</span>
+            <span class="pageSpan pageFirst">首页</span>
+            <span class="pageSpan prev" >上一页</span>
+            <span class="pageSpan next">下一页</span>
+            <span class="pageSpan pageLast">尾页</span>
+        </div>
+    </table>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/frame-workList.js"></script>
+</html>
+
+
+@charset "UTF-8";
+*{
+    padding: 0;
+    margin: 0;
+    font-family:"Microsoft Yahei",'SimHei';
+    color: #333333;
+}
+.title{
+    font-size: 14px;
+    text-align: left;
+    text-indent: 2em;
+    margin-top: 20px;
+}
+.select{
+    margin-top: 10px;
+    font-size: 13px;
+}
+.selectStyle{
+    height: 28px;
+    width: 100px;
+}
+.selectInput{
+    width: 180px;
+    height: 24px;
+}
+.business{
+    padding-left: 55px;
+}
+.search{
+    font-size: 13px;
+    text-align: left;
+    text-indent: 2em;
+    margin-top: 20px;
+}
+.searchMid{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.button{
+    width: 65px;
+    height: 29px;
+    color: white;
+    border: 1px solid #009DD9;
+    background: #009DD9;
+    margin-left: 20px;
+}
+.total{
+    height: 46px;
+    width: 94%;
+    border-bottom: 1px solid #333333;
+    margin-top: 20px;
+    line-height: 55px;
+    font-size: 14px;
+    margin-left: 3%;
+}
+.totalRed{
+    color: red;
+    display: inline;
+}
+.totalText{
+    float: left;
+}
+.totalButton{
+    float: right;
+}
+.totalMargin{
+    line-height: 40px;
+}
+.buttonRadius{
+    border-radius: 5px;
+    height: 33px;
+}
+.table{
+    width: 94%;
+    margin: 0 auto;
+    text-align: center;
+    table-layout: fixed;
+}
+table.table {
+    font-size:12px;
+    color:#333333;
+    border-color: #333333;
+    border-collapse: collapse;
+}
+table.table td {
+    border: 1px solid #333333;
+    padding: 6px;
+    word-break: break-all; word-wrap:break-word;
+}
+table tr:nth-of-type(2n+2){
+    background: rgba(0, 185, 255, 0.12);
+}
+tr a{
+    text-decoration: none;
+    color: blue;
+    cursor: pointer;
+}
+.page{
+    clear: both;
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+}
+.pageSpan{
+    margin-left: 6px;
+}
+.pageTotal{
+    color: red;
+}
+
+
+
+var model={
+    init:function()
+    {
+        var self=this;
+        this.queryData('urlInit.json');
+        this.bindEvent();
+    },
+    queryData:function(url,data)
+    {
+       var self=this;
+       //初始查询
+
+        common.ajax(url,data,function(res)
+        {
+
+            var dataInit=res.dataList;
+
+            self.render(dataInit);
+        });
+        //搜索查询
+        //common.ajax(url,data,function(res)
+        //{
+        //    var data2=res.searchList;
+        //    self.render(data2);
+        //});
+    },
+    render:function(data)
+    {
+        var frame=$(window.parent.document).find('#mainFrame'),
+            html='';
+        //渲染iframe数据
+        for(var i=0;i<data.length;i++)
+        {
+            html+='<tr><td>'+data[i].workLine+'</td><td>'+data[i].workName+'</td><td><a>'+data[i].workAddress+'</a></td><td>'+data[i].publisher+'</td> <td>'+data[i].UM+'</td> <td>'+data[i].publishTime+'</td> <td><span>上班'+data[i].workTime+'</span><span>下班'+data[i].offTime+'</span></td> <td>'+data[i].locationData+'</td> <td><a data-id="'+data[i].UM+'">编辑</a>&nbsp;<a>删除</a></td> </tr>'
+        }
+        $('#tr').after(html);
+        //改变iframe高度
+        frame.attr("height",Number($(document).height())+80);
+    },
+    bindEvent:function()
+    {
+        var self=this;
+        var data=[],
+            workName=$('#workName').val(),
+            name=$('#name').val(),
+            workLine=$('#workLine').val(),
+            selectPosition=$('#selectPosition').val(),
+            dateFrom=$('#dateFrom').val(),
+            dateTo=$('#dateTo').val();
+        //搜索事件
+        $('#search').on('click',function()
+        {
+            data=[{'workName':workName},{'name':name},{'workLine':workLine},
+                {'selectPosition':selectPosition},{'dateFrom':dateFrom},{'dataTo':dateTo}];
+
+            self.queryData('url',data);
+        });
+    }
+};
+model.init();
+
+
+
+ var common = {
+        init:function(){
+        },
+        ajax: function (url,data,successCallBack) {
+            var self = this;
+            $.ajax({
+                url: url,
+                data: data,
+                type: 'post',
+                dataType: 'json',
+                success: function (res) {
+                    // 报文string格式，对象化
+
+                    if (typeof res == 'string') {
+                        res = JSON.parse(res);
+                    }
+                    //请求成功调用回调函数，不成功就显示resMsg的警告信息
+                    if (res && res.resCode == '000') {
+                        successCallBack && successCallBack(res);
+                    } else {
+                        alert(res.resMsg);
+                    }
+                }
+            });
+        },
+        //setData: function (key, value) {
+        //    /* objcet,先转化为字符串*/
+        //    if (typeof value == 'object') {
+        //        localStorage.setItem(key, JSON.stringify(value));
+        //    } else {
+        //        localStorage.setItem(key, value);
+        //    }
+        //},
+        //getData: function (key) {
+        //    var data = localStorage.getItem(key);
+        //    try {
+        //        // JSON.parse抛出异常的处理方法
+        //        data = JSON.parse(data);
+        //        return data
+        //    } catch (e) {
+        //        return data
+        //    }
+        //}
+
+    };
+    common.init();
+
