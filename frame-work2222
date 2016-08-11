@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/frame-workList.css">
+</head>
+<body>
+<div class="title">职场管理&nbsp;>&nbsp;职场列表</div>
+<div class="title select">
+    <select class="selectStyle" id="workName">
+        <option>职场名称</option>
+        <option>UM账号</option>
+    </select>&nbsp;
+    <input id="name" type="text" class="selectInput2"/>
+    <span class="business">业务线</span>&nbsp;
+    <select id="workLine" class="selectStyle">
+        <option>全部</option>
+        <option>银行</option>
+    </select>
+    <span  class="location business">位置数据</span>&nbsp;
+    <select id="selectPosition" class="selectStyle">
+        <option>全部</option>
+        <option>已回传</option>
+        <option>未回传</option>
+    </select>
+</div>
+<div class="search">
+    <span>发布时间：</span>
+    <input id="dateFrom" type="date" class="selectInput">
+    <span class="searchMid">至</span><input id="dateTo" class="selectInput" type="date">
+    <input id="search" type="button" class="button" value="搜索">
+</div>
+<div class="total">
+    <div class="totalText">共有<span class="totalRed">**</span>条数据</div>
+    <div class="totalButton totalMargin"><input type="button" class="button buttonRadius" value="批量添加"><input type="button" class="button buttonRadius" value="新增职场"></div>
+</div>
+<div>
+    <table class="table" cellpadding="0" cellspacing="0"  >
+        <tbody id="tbody">
+        <tr style="height: 35px" id="tr">
+            <td width="45px">业务线</td>
+            <td width="96px">职场名称</td>
+            <td width="153px">职场地址</td>
+            <td width="50px">发布人</td>
+            <td width="70px">UM账号</td>
+            <td width="72px">发布时间</td>
+            <td width="67px">上下班时间</td>
+            <td >位置数据</td>
+            <td >操作</td>
+        </tr>
+        </tbody>
+        <div class="page">
+            <span class="pageSpan">共<b class="pageTotal pageCurrent">1</b>/<b class=" pageTotalTotal">2</b>页
+            </span>
+            <span class="pageSpan pageFirst">首页</span>
+            <span class="pageSpan prev last" >上一页</span>
+            <span class="pageSpan after next  ">下一页</span>
+            <span class="pageSpan pageLast">尾页</span>
+            <span class="pageSpan pageJump">跳至<input class="pageInput" type="text" pattern="[0-9]{1,4}">页</span>
+        </div>
+    </table>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/frame-workList.js"></script>
+</html>
+
+
+
+@charset "UTF-8";
+*{
+    padding: 0;
+    margin: 0;
+    font-family:"Microsoft Yahei",'SimHei';
+    color: #333333;
+}
+.title{
+    font-size: 14px;
+    text-align: left;
+    text-indent: 2em;
+    margin-top: 20px;
+}
+.select{
+    margin-top: 10px;
+    font-size: 13px;
+}
+.selectStyle{
+    height: 28px;
+    width: 100px;
+}
+.selectInput{
+    width: 130px;
+    height: 24px;
+}
+.selectInput2{
+    width: 180px;
+    height: 24px;
+}
+.business{
+    padding-left: 55px;
+}
+.search{
+    font-size: 13px;
+    text-align: left;
+    text-indent: 2em;
+    margin-top: 20px;
+}
+.searchMid{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.button{
+    width: 65px;
+    height: 29px;
+    color: white;
+    border: 1px solid #009DD9;
+    background: #009DD9;
+    margin-left: 20px;
+}
+.total{
+    height: 46px;
+    width: 94%;
+    border-bottom: 1px solid #333333;
+    margin-top: 20px;
+    line-height: 55px;
+    font-size: 14px;
+    margin-left: 3%;
+}
+.totalRed{
+    color: red;
+    display: inline;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+.totalText{
+    float: left;
+}
+.totalButton{
+    float: right;
+}
+.totalMargin{
+    line-height: 40px;
+}
+.buttonRadius{
+    border-radius: 5px;
+    height: 33px;
+}
+.table{
+    width: 94%;
+    margin: 0 auto;
+    text-align: center;
+    table-layout: fixed;
+}
+table.table {
+    font-size:12px;
+    color:#333333;
+    border-color: #333333;
+    border-collapse: collapse;
+}
+table.table td {
+    border: 1px solid #333333;
+    padding: 6px;
+    word-break: break-all; word-wrap:break-word;
+}
+table tr:nth-of-type(2n+2){
+    background: rgba(0, 185, 255, 0.12);
+}
+tr a{
+    text-decoration: none;
+    color: blue;
+    cursor: pointer;
+}
+.prev{
+    color: red;
+    cursor: pointer;
+}
+.page{
+    clear: both;
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+}
+.pageSpan{
+    margin-left: 6px;
+}
+.pageTotal{
+    color:red;
+    cursor: pointer;
+}
+.pageInput{
+    width: 20px;
+    height: 16px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+
+
+
+var model={
+    init:function()
+    {
+        var self=this;
+        this.pageCurrent= 1;
+        this.pageIndex=0;
+        this.pageSize=20;
+        $('.last').removeClass('prev');
+        $('.pageFirst').removeClass('prev');
+        $('.next').addClass('prev');
+        $('.pageLast').addClass('prev');
+        this.queryData('urlInit.json',{'sessionID':['123']},self.pageCurrent,self.pageIndex );
+        this.bindEvent();
+    },
+    queryData:function(url,data,pageCurrent,pageIndex)
+    {
+        var self=this;
+
+        common.ajax(url,data,function(res)
+        {
+            var data=res.dataList;
+            self.render(data,pageCurrent,pageIndex);
+        });
+    },
+    render:function(data,pageCurrent,pageIndex)
+    {
+        var self=this;
+
+        //渲染项目总数
+        var total=data.length+1;
+        $('.totalRed').text(total);
+        //渲染总页数与当前页
+        self.totalPage=Math.ceil(total/self.pageSize);
+        var pageCurr=pageCurrent;
+
+        $('.pageTotalTotal').text(self.totalPage);
+        $('.pageCurrent').text(pageCurr);
+
+
+        var frame=$(window.parent.document).find('#mainFrame');
+            self.html1='';
+            self.html2='';
+            self.html3='';
+            self.html4='';
+            self.html5='';
+        //渲染iframe数据
+        for(var i=0;i<data.length;i++)
+        {
+                if(i<20)
+                {
+                    self.html1+='<tr><td>'+data[i].workLine+'</td><td>'+data[i].workName+'</td><td><a>'+data[i].workAddress+'</a></td><td>'+data[i].publisher+'</td> <td>'+data[i].UM+'</td> <td>'+data[i].publishTime+'</td> <td><span style="display: block">上班'+data[i].workTime+'</span><span style="display: block">下班'+data[i].offTime+'</span></td> <td>'+data[i].locationData+'</td> <td><a data-id="'+data[i].UM+'">编辑</a>&nbsp;<a>删除</a></td> </tr>'
+                }
+
+
+        }
+        $('table tr:gt(0)').remove();
+        $('#tr').after(self.html1);
+        //改变iframe高度
+        frame.attr("height",Number($(document).height())+80);
+    },
+    bindEvent:function()
+    {
+        var self=this;
+        var data=[],
+            workName=$('#workName').val(),
+            name=$('#name').val(),
+            workLine=$('#workLine').val(),
+            selectPosition=$('#selectPosition').val(),
+            dateFrom=$('#dateFrom').val(),
+            dateTo=$('#dateTo').val();
+        //搜索事件
+        $('#search').on('click',function()
+        {
+            data={"searchList":[{"sessionId":"123"},{"workName":workName},{"name":name},{"workLine":workLine}, {"selectPosition":selectPosition},{"dateFrom":dateFrom},{"dataTo":dateTo}]};
+            self.queryData('url',data);
+        });
+        //页码输入框
+        self.pageInput=$('.pageInput');
+        self.pageInput.keydown(function(e)
+        {
+                if(e.keyCode==13&&!isNaN(self.pageInput.val())&&self.pageInput.val()==1)
+                {
+                    self.pageCurrent=self.pageInput.val();
+                    self.pageIndex=self.pageCurrent-1;
+                    self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+                    $('.last').removeClass('prev');
+                    $('.pageFirst').removeClass('prev');
+                    $('.next').addClass('prev');
+                    $('.pageLast').addClass('prev');
+                }
+                else if(e.keyCode==13&&!isNaN(self.pageInput.val())&&self.pageInput.val()<self.totalPage)
+                {
+                    self.pageCurrent=self.pageInput.val();
+                    self.pageIndex=self.pageCurrent-1;
+                    self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+                    $('.last').addClass('prev');
+                    $('.pageFirst').addClass('prev');
+                    $('.next').addClass('prev');
+                    $('.pageLast').addClass('prev');
+                }
+                else if(e.keyCode==13&&!isNaN(self.pageInput.val())&&self.pageInput.val()==self.totalPage)
+                {
+                    self.pageCurrent=self.pageInput.val();
+                    self.pageIndex=self.pageCurrent-1;
+                    self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+                    $('.last').addClass('prev');
+                    $('.pageFirst').addClass('prev');
+                    $('.next').removeClass('prev');
+                    $('.pageLast').removeClass('prev');
+                }
+                else
+                {}
+        });
+        //上一页
+        $('.last').on('click',function()
+        {
+             self.pageCurrent=self.pageCurrent-1;
+            self.pageIndex=self.pageCurrent-1;
+           if(self.pageCurrent>1)
+           {
+               self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+               $('.last').addClass('prev');
+               $('.pageFirst').addClass('prev');
+               $('.next').addClass('prev');
+               $('.pageLast').addClass('prev');
+               console.log(self.pageCurrent);
+           }else if(self.pageCurrent==1){
+               $('.last').removeClass('prev');
+               $('.pageFirst').removeClass('prev');
+               $('.next').addClass('prev');
+               $('.pageLast').addClass('prev');
+               self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+               console.log(self.pageCurrent);
+           }else {
+               self.pageCurrent=1;self.pageIndex=0
+           }
+        });
+        //下一页
+        $('.next').on('click',function()
+        {
+            self.pageCurrent=Number(self.pageCurrent)+1;
+            self.pageIndex=self.pageCurrent-1;
+            if(self.pageCurrent<self.totalPage)
+            {
+                self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+                $('.next').addClass('prev');
+                $('.pageLast').addClass('prev');
+                $('.last').addClass('prev');
+                $('.pageFirst').addClass('prev');
+                console.log(self.pageCurrent);
+            }
+            else if(self.pageCurrent==self.totalPage){
+                $('.next').removeClass('prev');
+                $('.pageLast').removeClass('prev');
+                $('.last').addClass('prev');
+                $('.pageFirst').addClass('prev');
+                self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+                console.log(self.pageCurrent);
+            }else{self.pageCurrent=self.totalPage;self.pageIndex=self.pageCurrent-1;}
+        });
+        //首页
+        $('.pageFirst').on('click',function()
+        {
+            self.pageCurrent=1;self.pageIndex=0;
+            $('.next').addClass('prev');
+            $('.pageLast').addClass('prev');
+            $('.last').addClass('prev');
+            $('.pageFirst').addClass('prev');
+            self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+        });
+        //尾页
+        $('.pageLast').on('click',function()
+        {
+            self.pageCurrent=self.totalPage;self.pageIndex=self.pageCurrent-1;
+            $('.next').removeClass('prev');
+            $('.pageLast').removeClass('prev');
+            $('.last').addClass('prev');
+            $('.pageFirst').addClass('prev');
+            self.queryData('urlInit.json',data,self.pageCurrent,self.pageIndex);
+        });
+    }
+};
+model.init();
