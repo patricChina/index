@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>职场列表页</title>
+    <link type="text/css" rel="stylesheet" href="css/workManage.css">
+</head>
+<body>
+<div class="wrap">
+    <div class="wrapBorder">
+        <div class="header">易考勤打卡管理系统
+            <div class="logo">平安科技</div>
+        </div>
+        <div class="sidebar">
+            <div class="side top">职场管理<div class="triangle"></div></div>
+            <div class="side bottom cursor" id="work" >职场列表</div>
+            <div class="side bottom cursor" id="card">打卡记录</div>
+        </div>
+        <iframe id="mainFrame"   name="mainFrame" src="frame-workList.html" width="828" marginheight="0" marginwidth="0" frameborder="0"></iframe>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/workManage.js"></script>
+</html>
+
+
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family:"Microsoft Yahei",'SimHei';
+    color: #333333;
+}
+.wrap{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+.wrapBorder{
+    width: 1000px;
+    min-height: 100%;
+    margin: 10% auto 0 auto;
+}
+.header{
+    width: 1000px;
+    height: 120px;
+    border: solid 1px #333333;
+    text-align: center;
+    position: relative;
+    line-height: 120px;
+    font-size: 20px;
+}
+.logo{
+    width: 150px;
+    height: 100px;
+    left: 15px;
+    top: 9px;
+    border: 1px solid #333333;
+    position: absolute;
+    line-height: 100px;
+}
+.sidebar{
+    width: 155px;
+    height: 560px;
+    border: solid 1px #333333;
+    margin: 10px auto auto 0;
+    float: left;
+}
+.side{
+   width: 135px;
+    height: 30px;
+    margin: 0 auto;
+    text-align: center;
+}
+.top{
+    font-size: 18px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.triangle{
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-top: 12px solid #333333;
+    border-right: 6px solid transparent;
+    position: absolute;
+    right: 8px;
+    top: 6px;
+}
+.bottom{
+    font-size: 14px;
+    line-height: 30px;
+}
+.init{
+    color: blue;
+    cursor: pointer;
+    font-size: 15px;
+}
+.init2{
+    cursor: pointer;
+}
+iframe{
+    float: right;
+    margin: 10px 0 auto auto;
+    border: 1px solid #333333;
+    width: 826px;
+}
+.cursor{
+    cursor: pointer;
+}
+
+
+
+var model={
+  init:function()
+  {
+      var self=this;
+      self.mainFrame=$('#mainFrame');
+      self.work=$('#work');
+      self.card=$('#card');
+      self.work.hide();
+      self.card.hide();
+      self.mainFrame.attr('src','');
+      self.sessionID= sessionStorage.getItem('sessionID');
+      self.roles=sessionStorage.getItem('roles');
+      console.log(self.roles);
+      if( self.roles=='work-card'){
+
+          self.work.show().addClass('init');
+          self.card.show().addClass('init2');
+          self.mainFrame.attr('src','frame-workList.html');
+      }else if(self.roles=='work')
+      {
+          self.work.show().addClass('init');
+          self.card.hide();
+          self.mainFrame.attr('src','frame-workList.html');
+      }else if(self.roles=='card'){
+          self.work.hide();
+          self.card.show().addClass('init');
+          self.mainFrame.attr('src','frame-card.html');
+      }
+      this.bindEvent();
+
+  },
+    queryData:function(){},
+    render:function()
+    {
+
+    },
+    bindEvent:function()
+    {
+        var self=this;
+        self.work.on('click',function()
+        {
+            self.mainFrame.attr('src','frame-workList.html');
+            self.work.addClass('init').siblings().removeClass('init');
+        });
+        self.card.on('click',function()
+        {
+            self.card.addClass('init').siblings().removeClass('init');
+            self.mainFrame.attr('src','frame-card.html');
+        });
+    }
+};
+model.init();
+
+
