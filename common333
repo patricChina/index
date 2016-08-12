@@ -1,0 +1,47 @@
+ var common = {
+        init:function(){
+        },
+        ajax: function (url,data,successCallBack) {
+            var self = this;
+            $.ajax({
+                url: url,
+                data: data,
+                type: 'post',
+                dataType: 'json',
+                success: function (res) {
+                    // 报文string格式，对象化
+
+                    if (typeof res == 'string') {
+                        res = JSON.parse(res);
+                    }
+                    //请求成功调用回调函数，不成功就显示resMsg的警告信息
+                    if (res && res.responseCode == '00') {
+                        successCallBack && successCallBack(res);
+                    } else {
+                        alert(res.resMsg);
+                    }
+                }
+            });
+        },
+        //setData: function (key, value) {
+        //    /* objcet,先转化为字符串*/
+        //    if (typeof value == 'object') {
+        //        localStorage.setItem(key, JSON.stringify(value));
+        //    } else {
+        //        localStorage.setItem(key, value);
+        //    }
+        //},
+        //getData: function (key) {
+        //    var data = localStorage.getItem(key);
+        //    try {
+        //        // JSON.parse抛出异常的处理方法
+        //        data = JSON.parse(data);
+        //        return data
+        //    } catch (e) {
+        //        return data
+        //    }
+        //}
+
+    };
+    common.init();
+
